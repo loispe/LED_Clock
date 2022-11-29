@@ -25,3 +25,7 @@ Druing this process, I faced a lot of weird placed components and unneccessary c
 
 ## Software
 I don't have any detailed plans for the software design yet. My only goal is to find a somewhat nice and clean way of manipulating the bit strings for driving the LEDs
+
+## Error Log
+* CS (Pin 14) of uC not connected to programming interface
+* /SCLR (Pin 13) of all shift registers is not connected to GND (free floating). Since the clock was working back in 2017 it does not seem to effect the operation of the registers, nevertheless this is not ideal and should be fixed
