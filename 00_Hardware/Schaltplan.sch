@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="mm" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="mm"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -16653,6 +16653,11 @@ DIN A3, landscape with location and doc. field</description>
 <wire x1="269.24" y1="35.56" x2="269.24" y2="27.94" width="0.1524" layer="91"/>
 <junction x="269.24" y="27.94"/>
 </segment>
+<segment>
+<pinref part="IC1" gate="G$1" pin="PD4(T0/XCK/PCINT20)"/>
+<wire x1="25.4" y1="35.56" x2="15.24" y2="35.56" width="0.1524" layer="91"/>
+<label x="15.24" y="35.56" size="1.27" layer="95" rot="R180" xref="yes"/>
+</segment>
 </net>
 <net name="N$47" class="0">
 <segment>
@@ -17138,11 +17143,6 @@ DIN A3, landscape with location and doc. field</description>
 <wire x1="210.82" y1="35.56" x2="215.9" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="215.9" y1="35.56" x2="215.9" y2="27.94" width="0.1524" layer="91"/>
 <junction x="215.9" y="27.94"/>
-</segment>
-<segment>
-<pinref part="IC1" gate="G$1" pin="PD4(T0/XCK/PCINT20)"/>
-<wire x1="25.4" y1="35.56" x2="15.24" y2="35.56" width="0.1524" layer="91"/>
-<label x="15.24" y="35.56" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
 <pinref part="IC1" gate="G$1" pin="PD5(T1/OC0B/PCINT21)"/>
