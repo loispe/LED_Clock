@@ -23,7 +23,7 @@ Matrix mxn definition:
 #define M_MATRIX_M 8
 #define M_MATRIX_N 8
 
-#define H_INIT 0b01110001                 //Bitchain for turning on LED_12. 0b0aaaakkk  where a = anode, k = kathode. E.g. "aaaa" adresses the matrix columns. "1110" will set column 0 to '0'; 1, 2 and 3 to '1'
+#define H_INIT 0b01110001                 //Bitchain for turning on LED_12. 0b0kkkkaaa  where a = anode, k = kathode. E.g. "kkkk" adresses the matrix columns. "1110" will set column 0 to '0'; 1, 2 and 3 to '1'
 #define M_INIT 0b0000000000000000
 
 //sets the output of the desired shift register with a given bitchain
@@ -35,7 +35,7 @@ void srDataOut(uint8_t data, uint8_t sck, uint8_t rck, uint8_t ser){
               digitalWrite(ser, (data & 128) != 0);     //(data & 128) != 0 checks state of the 8th (MSB) bit, returns its value
               data <<= 1;
               
-              digitalWrite(sck, HIGH);
+              digitalWrite(sck, HIGH);                  
               digitalWrite(sck, LOW);
        }
 
@@ -44,21 +44,21 @@ void srDataOut(uint8_t data, uint8_t sck, uint8_t rck, uint8_t ser){
 
 uint8_t generateHourBitchain(uint8_t hour_dec){
        uint8_t h_bitchain = H_INIT;
-       uint8_t mask_a = ((1 << 3) - 1) << 3;       //mask to isolate the lower three "a"'s of "aaaa" from 0b0aaaakkk 
-       uint8_t mask_k = (1 << 3) - 1;              //mask to isolate "kkk" from 0b0aaaakkk
-       uint8_t a, k;
+       uint8_t mask_k = ((1 << 3) - 1) << 3;       //mask to isolate the lower three "k"'s of "kkkk" from 0b0kkkkaaa 
+       uint8_t mask_a = (1 << 3) - 1;              //mask to isolate "kkk" from 0b0kkkkaaa
+       uint8_t k, a;
 
        //implement check if hour_dec is between 0 and 11. Otherwise return a predefined error bitchain!
 
        for (uint8_t i = 0; i <= hour_dec; i++){
               if(i != 0){
-                     a = (h_bitchain & mask_a) >> 2;    //apply mask and shift 0b00aaa000 >> 2 --> 0b0000aaa0
-                     k = h_bitchain & mask_k;
+                     k = (h_bitchain & mask_k) >> 2;    //apply mask and shift 0b00aaa000 >> 2 --> 0b0000aaa0
+                     a = h_bitchain & mask_a;
 
-                     if(i % 4 == 0) k <<= 1;            //true --> reached last led of the current matrix row. k << 1 correlates to selecting the next matrix row
-                     else a |= 1;                       //false --> select next led in the current matrix row. a |= 1 in combination with the >> 2 creates the expected bitchain
+                     if(i % 4 == 0) a <<= 1;            //true --> reached last led of the current matrix row. a << 1 correlates to selecting the next matrix row
+                     else k |= 1;                       //false --> select next led in the current matrix row. k |= 1 in combination with the >> 2 creates the expected bitchain
 
-                     h_bitchain = (a << 3) | k;         //recreate bitchain pattern 0b0aaaakkk
+                     h_bitchain = (k << 3) | a;         //recreate bitchain pattern 0b0kkkkaaa
               }
        }
        return h_bitchain;
