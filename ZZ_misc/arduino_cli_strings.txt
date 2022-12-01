@@ -1,0 +1,7 @@
+Since the VSC Arduino extension isn't working properly when selecting an external programmer, I came across the usage of Arduino CLI. Following command prompts seem to work:
+
+Compile:
+arduino-cli compile --fqbn arduino:avr:nano uC_Clock.ino
+
+Upload: 
+arduino-cli -v upload -p COM3 --fqbn arduino:avr:nano uC_Clock.ino -P arduinoasisp
